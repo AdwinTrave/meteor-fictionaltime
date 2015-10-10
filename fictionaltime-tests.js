@@ -1,7 +1,7 @@
 /**
  * Tinytest for fictionaltime
  */
-var correctTime = {connectedToET: false, beginning: false, units: [10, 100, 1000], separators: [":", ":"], declaration: "SUT ", declarationLocation: "before"};
+var correctTime = {connectedToET: false, beginning: false, units: [100, 100, 1000], separators: [":", ":"], declaration: "SUT ", declarationLocation: "before"};
 var ft = new FictionalTime(correctTime);
 Tinytest.add('Succesfully create a fictionaltime variable from object.', function (test) {
   var ftcorrect = new FictionalTime(correctTime);
@@ -54,6 +54,7 @@ Tinytest.add('Fail to create fictionaltime when incorrect object is passed in.',
 
 //
 // Test for the different functions
+// TODO add test for non SUT times
 //
 Tinytest.add('toTime()', function(test){
   test.equal(ft.toTime(99000), "0:00:99");
