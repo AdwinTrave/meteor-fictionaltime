@@ -28,14 +28,26 @@ First add the package to your project:
 
 Then you can initialize fictional time anywhere in your code.
 ```javascript
-var correctTime = {connectedToET: false, beginning: false, units: [10, 100, 1000], separators: [":", ":"], declaration: "SUT", declarationLocation: "before"};
-var ft = new FictionalTime(correctTime);
+var sut = {connectedToET: false, beginning: false, units: [500, 10, 100, 100, 1000], separators: [".", " ", ":", ":"], declaration: "SUT ", declarationLocation: "before"};
+var sutTime = new FictionalTime(sut);
 ```
 
 ### Available functions
 #### toTime
 #### toDate
 #### toUnit
+```javascript
+toUnit(milliseconds, position)
+```
+milliseconds - the number of milliseconds you want to convert to a given unit
+
+position - position of the unit in the units array you provided in the definition of the time
+
+Example:
+```javascript
+sut.toUnit(50000000000, 0);
+```
+Will return 1.
 #### unitToMilliseconds
 #### currentDateTime
 

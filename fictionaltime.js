@@ -191,10 +191,11 @@ FictionalTime = function(fictionalTimeObject){
     */
    this.toUnit = function(milliseconds, unit){
      //get how many milliseconds is one unit
-     var oneUnit;
-     for (var i = unit; i < fictionalTime.units.length; i++) {
+     var oneUnit = fictionalTime.units[unit];
+     for (var i = unit + 1; i < fictionalTime.units.length; i++) {
        oneUnit = oneUnit * fictionalTime.units[i];
      }
+     console.log(oneUnit);
 
      //calculate
      return milliseconds / oneUnit;
@@ -290,8 +291,7 @@ FictionalTime = function(fictionalTimeObject){
 
        //calculate what is the maximum of the given unit
        var max = 0;
-       if(i !== 0)
-       {
+       if(i !== 0){
          max = unitsMilliseconds[i-1] / unitsMilliseconds[i];
        }
 
@@ -302,8 +302,7 @@ FictionalTime = function(fictionalTimeObject){
          //get the correct number that is going to be increasing
          parts[i] = max-count;
          //account for getting the max number displayed
-         if(count === max)
-         {
+         if(count === max){
            parts[i] = 0;
            parts[i-1] = parseInt(parts[i-1]) - 1;
          }
@@ -343,8 +342,7 @@ FictionalTime = function(fictionalTimeObject){
          outputString += fictionalTime.declaration;
        }
 
-       if(fictionalTime.declarationLocation === "both")
-       {
+       if(fictionalTime.declarationLocation === "both"){
          outputString = fictionalTime.declaration[0] + outputString + fictionalTime.declaration[1];
        }
      }
@@ -371,8 +369,7 @@ FictionalTime = function(fictionalTimeObject){
          var add;
 
          //first determine how many zeroes need to be added
-         if(max[0] === "1" && max[max.length-1] === "0")
-         {
+         if(max[0] === "1" && max[max.length-1] === "0"){
            add = (max.length - 1) - number.length;
 
            //prevent incorrect minus values
@@ -421,12 +418,10 @@ FictionalTime = function(fictionalTimeObject){
        outputString += parts[i];
 
        //account for last empty separator
-       if(i !== fictionalTime.separators.length)
-       {
+       if(i !== fictionalTime.separators.length){
          outputString += fictionalTime.separators[i];
        }
       }
-
       return outputString;
    }
 };
