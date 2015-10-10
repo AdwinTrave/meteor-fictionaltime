@@ -22,7 +22,7 @@ In order to create a time you need the following values:
 * Declarator that will be placed "before" (`'Earth Time '`), "after" (`' GMT'`) or at "both" ends (`['Earth Time ', ' GMT']`) - don't forget the spaces - or "none".
 * Where is the main unit declaration located at, options are: before, after, both, false
 
-#### Get started
+#### Get started - not yet working
 First add the package to your project:
 `meteor add storyteller:fictionaltime`
 
