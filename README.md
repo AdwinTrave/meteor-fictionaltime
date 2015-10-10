@@ -1,5 +1,7 @@
 [![MIT License][license-image]][license-url]
-[![Build Status](https://secure.travis-ci.org/AdwinTrave/meteor-fictionaltime.png?branch=master)](https://travis-ci.org/AdwinTrave/meteor-fictionaltime)
+
+# Under development, not yet functional
+
 # Fictional time
 Fictional time allows you to create, display and convert units to and from your own (symetric) fictional time. Example at [sfb.freedombase.net](http://sfb.freedombase.net).
 
