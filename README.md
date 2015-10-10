@@ -3,7 +3,7 @@
 # Under development, not yet functional
 
 # Fictional time
-Fictional time allows you to create, display and convert units to and from your own (symetric) fictional time. Example at [sfb.freedombase.net](http://sfb.freedombase.net).
+Fictional time allows you to create, display and convert units to and from your own (symetric) fictional time. Old and buggy example at [sfb.freedombase.net](http://sfb.freedombase.net).
 
 ## Installation
 `meteor add storyteller:fictionaltime`
