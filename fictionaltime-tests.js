@@ -56,7 +56,8 @@ Tinytest.add('Fail to create fictionaltime when incorrect object is passed in.',
 // Test for the different functions
 //
 Tinytest.add('toTime()', function(test){
-  test.equal(ft.toTime(100000), "01:00");
+  test.equal(ft.toTime(99000), "0:00:99");
+  test.equal(ft.toTime(100000), "0:01:00");
   //test.equal(ft.toTime(2000), "02");
 });
 

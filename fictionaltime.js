@@ -275,16 +275,14 @@ FictionalTime = function(fictionalTimeObject){
      //figure out how many milliseconds is there for each unit for optimized calculations
      var unitsMilliseconds = [];
      for (var i = 0; i < fictionalTime.units.length; i++) {
+       //calculate how much milliseconds does the current unit contain
+       unitsMilliseconds[i] = fictionalTime.units[i];
 
-       //get the rest of the units
-       var theRest = 0;
+       //multiply with the remaining units to get to milliseconds
        for (var k = i+1; k < fictionalTime.units.length; k++) {
-         theRest = theRest * fictionalTime.units[k];
+         unitsMilliseconds[i] = unitsMilliseconds[i] * fictionalTime.units[k];
        }
-
-       unitsMilliseconds[i] = fictionalTime.units[i] * theRest;
      }
-     console.log(unitsMilliseconds);
 
      for (var i = 0; i < fictionalTime.units.length; i++) {
        //first calculate how many units are there
@@ -296,9 +294,6 @@ FictionalTime = function(fictionalTimeObject){
        {
          max = unitsMilliseconds[i-1] / unitsMilliseconds[i];
        }
-
-       console.log("count: " + count);
-       console.log("max: " + max);
 
        //if this is a date before the establishment of time
        //the last units which is assumed to be equivalent to years
@@ -326,7 +321,7 @@ FictionalTime = function(fictionalTimeObject){
       //reduce the time by the unit calculated
       milliseconds = milliseconds - (count * unitsMilliseconds[i]);
      }
-     console.log(parts);
+     //console.log(parts);
 
      //if one of the separators is space and if beyond it there are no values,
      //just get rid of that part all the way to separator
@@ -337,6 +332,7 @@ FictionalTime = function(fictionalTimeObject){
 
      //format time
      var outputString = formatTime(parts, minus);
+     console.log(outputString);
 
      if(date){
        //add time declaration
@@ -409,22 +405,22 @@ FictionalTime = function(fictionalTimeObject){
    function formatTime(parts, minus)
    {
       //return the string to display the time
-      var outputString;
+      var outputString = "";
       for (var i = 0; i < parts.length; i++) {
-        var k = i+1;
-
         //unit declaration before time
-        if(i === 0)
+        if(i === 0 && minus)
         {
-
           //add the minus before declaration
-          if(minus)
-          {
-            outputString += "-";
-          }
+          outputString += "-";
        }
 
-       outputString += parts[i] + fictionalTime.separators[k];
+       outputString += parts[i];
+
+       //account for last empty separator
+       if(i !== fictionalTime.separators.length)
+       {
+         outputString += fictionalTime.separators[i];
+       }
       }
 
       return outputString;
