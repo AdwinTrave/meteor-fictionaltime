@@ -332,7 +332,6 @@ FictionalTime = function(fictionalTimeObject){
 
      //format time
      var outputString = formatTime(parts, minus);
-     console.log(outputString);
 
      if(date){
        //add time declaration
@@ -368,7 +367,7 @@ FictionalTime = function(fictionalTimeObject){
        //the first number does not need additional zeroes
        if(i !== 0){
          var number = parts[i].toString();
-         var max = fictionalTime.units[i].toString();
+         var max = fictionalTime.units[i-1].toString();
          var add;
 
          //first determine how many zeroes need to be added
@@ -386,7 +385,6 @@ FictionalTime = function(fictionalTimeObject){
 
          //add the zeroes before the given number
          for (var k = 0; k < add; k++) {
-
            number = "0" + number;
          }
 
