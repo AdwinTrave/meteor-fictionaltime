@@ -34,7 +34,31 @@ var sutTime = new FictionalTime(sut);
 
 ### Available functions
 #### toTime
+```javascript
+toTime(milliseconds)
+```
+milliseconds - the number of milliseconds you want to dispaly in the time
+
+TODO: shorten the displayed time only to the relevant units
+
+Example:
+```javascript
+sut.toTime(100000)
+```
+Will return "0.000 0:01:00".
 #### toDate
+```javascript
+toDate(milliseconds)
+```
+milliseconds - the number of milliseconds you want to dispaly in the time
+
+Same as toTime, but it also includes all the units and declaration.
+
+Example:
+```javascript
+sutTime.toDate(100000);
+```
+Will return "SUT 0.000 0:01:00".
 #### toUnit
 ```javascript
 toUnit(milliseconds, position)
@@ -49,7 +73,23 @@ sut.toUnit(50000000000, 0);
 ```
 Will return 1.
 #### unitToMilliseconds
+```javascript
+unitToMilliseconds(count, unit)
+```
+milliseconds - the number of milliseconds you want to convert to a given unit
+
+position - position of the unit in the units array you provided in the definition of the time
+
+Opposite of toUnit, will return milliseconds to of the given unit.
+
+Example:
+```javascript
+sut.unitToMilliseconds(1, 0);
+```
+Will return 50000000000.
+
 #### currentDateTime
+If your time has an establishment date, then you can use this to display your current fictional date time.
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE

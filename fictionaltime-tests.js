@@ -9,6 +9,10 @@ var ft = new FictionalTime(correctTime);
 var sut = {connectedToET: false, beginning: false, units: [500, 10, 100, 100, 1000], separators: [".", " ", ":", ":"], declaration: "SUT ", declarationLocation: "before"};
 var sutTime = new FictionalTime(sut);
 
+//time anchored to ET
+var anchoredTime = {};
+var anchorTime = new FictionalTime(anchoredTime);
+
 //time with strange units
 var strangeTime = {};
 var strTime;
@@ -69,6 +73,7 @@ Tinytest.add('Fail to create fictionaltime when incorrect object is passed in.',
 Tinytest.add('toTime()', function(test){
   test.equal(ft.toTime(99000), "0:00:99");
   test.equal(ft.toTime(100000), "0:01:00");
+  test.equal(sutTime.toTime(100000), "0.000 0:01:00");
   //test.equal(ft.toTime(2000), "02");
 });
 
@@ -77,6 +82,7 @@ Tinytest.add('toDate()', function(test){
   test.equal(sutTime.toDate(10000000000), "SUT 0.100 0:00:00");
   test.equal(sutTime.toDate(49900000000), "SUT 0.499 0:00:00");
   test.equal(sutTime.toDate(50000000000), "SUT 1.000 0:00:00");
+  test.equal(sutTime.toDate(100000), "SUT 0.000 0:01:00");
 });
 
 Tinytest.add('toUnit()', function(test){
@@ -85,7 +91,7 @@ Tinytest.add('toUnit()', function(test){
 });
 
 Tinytest.add('unitToMilliseconds()', function(test){
-
+  test.equal(sutTime.unitToMilliseconds(1, 0), 50000000000);
 });
 
 Tinytest.add('currentTime()', function(test){

@@ -195,7 +195,6 @@ FictionalTime = function(fictionalTimeObject){
      for (var i = unit + 1; i < fictionalTime.units.length; i++) {
        oneUnit = oneUnit * fictionalTime.units[i];
      }
-     console.log(oneUnit);
 
      //calculate
      return milliseconds / oneUnit;
@@ -212,15 +211,15 @@ FictionalTime = function(fictionalTimeObject){
   this.unitToMilliseconds = function(count, unit)
   {
     //get how many milliseconds is one unit
-    var oneUnit;
-    for (var i = unit; i < fictionalTime.units.length; i++) {
+    var oneUnit = fictionalTime.units[unit];
+    for (var i = unit + 1; i < fictionalTime.units.length; i++) {
       oneUnit = oneUnit * fictionalTime.units[i];
     }
     return count * oneUnit;
   }
 
   /**
-   * @method currentTime
+   * @method currentDateTime
    *
    * Gives you the current fictional date and time if linked to ET
    *
