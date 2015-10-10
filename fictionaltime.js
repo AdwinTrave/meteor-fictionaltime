@@ -365,31 +365,37 @@ FictionalTime = function(fictionalTimeObject){
      var returnParts = [];
 
      for (var i = 0; i < parts.length; i++) {
-      var number = parts[i].toString();
-      var max = fictionalTime.units[i].toString();
-      var add;
+       //the first number does not need additional zeroes
+       if(i !== 0){
+         var number = parts[i].toString();
+         var max = fictionalTime.units[i].toString();
+         var add;
 
-      //first determine how many zeroes need to be added
-      if(max[0] === "1" && max[max.length-1] === "0")
-      {
-        add = (max.length - 1) - number.length;
+         //first determine how many zeroes need to be added
+         if(max[0] === "1" && max[max.length-1] === "0")
+         {
+           add = (max.length - 1) - number.length;
 
-        //prevent incorrect minus values
-        if(add < 0){
-          add = 0;
-        }
-      } else {
-        add = max.length - number.length;
-      }
+           //prevent incorrect minus values
+           if(add < 0){
+             add = 0;
+           }
+         } else {
+           add = max.length - number.length;
+         }
 
-      //add the zeroes before the given number
-      for (var k = 0; k < add; k++) {
+         //add the zeroes before the given number
+         for (var k = 0; k < add; k++) {
 
-        number = "0" + number;
-      }
+           number = "0" + number;
+         }
 
-      //add number back to the array
-      returnParts[i] = number;
+         //add number back to the array
+         returnParts[i] = number;
+       } else {
+         var number = parts[i].toString();
+         returnParts[i] = number;
+       }
      }
      return returnParts;
    }
