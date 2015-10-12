@@ -1,6 +1,6 @@
 [![MIT License][license-image]][license-url]
 
-# Under development, not yet functional
+# Under development, use with caution!
 
 # Fictional time
 Fictional time allows you to create, display and convert units to and from your own (symetric) fictional time. Old and buggy example at [sfb.freedombase.net](http://sfb.freedombase.net).
@@ -88,8 +88,18 @@ sut.unitToMilliseconds(1, 0);
 ```
 Will return 50000000000.
 
-#### currentDateTime
+#### currentDateTime - coming in 0.2
 If your time has an establishment date, then you can use this to display your current fictional date time.
+
+```javascript
+sut.currentDateTime();
+```
+
+#### countdown - coming in 0.2
+If your time has an establishment date, then you can create a countdown to a certain Earth date and time.
+```javascript
+sut.countdown(new Date('2400-01-01').getMilliseconds());
+```
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE

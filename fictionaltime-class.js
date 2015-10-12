@@ -1,3 +1,4 @@
+"use strict";
 /**
  * storyteller:fictionaltime
  * Create your own linear fictional time.
@@ -21,7 +22,6 @@ FictionalTime = class FictionalTime {
       if( typeof(fictionalTimeObject.connectedToET) === "boolean" &&
       Array.isArray(fictionalTimeObject.units) &&
       Array.isArray(fictionalTimeObject.separators) &&
-      typeof(fictionalTimeObject.declaration) === "string" &&
       typeof(fictionalTimeObject.declarationLocation) === "string")
       {
         //test beginning properly
@@ -30,7 +30,7 @@ FictionalTime = class FictionalTime {
           if(typeof(fictionalTimeObject.beginning) !== "number")
           {
             console.log("Wrong date format for beginning.");
-            //TODO instead of return false throw an error that is not going to crash the app
+            //TODO instead of return false throw an error/exception that is not going to crash the app
             return false;
           }
         }
@@ -39,11 +39,17 @@ FictionalTime = class FictionalTime {
         //allowed values: before, after, none
         var decLoc = false;
         if(fictionalTimeObject.declarationLocation === "before"){
-          decLoc = true;
+          if(typeof(fictionalTimeObject.declaration) === "string")
+          {
+            decLoc = true;
+          }
         }
         if(!decLoc){
           if(fictionalTimeObject.declarationLocation === "after"){
-            decLoc = true;
+            if(typeof(fictionalTimeObject.declaration) === "string")
+            {
+              decLoc = true;
+            }
           }
         }
         //TODO add test cases for this
