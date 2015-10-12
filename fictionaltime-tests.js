@@ -27,43 +27,43 @@ Tinytest.add('Succesfully create a fictionaltime variable from object.', functio
 
 Tinytest.add('Fail to create fictionaltime when incorrect object is passed in.', function(test) {
   var failingTime1 = "nothing";
-  test.equal(FictionalTime(failingTime1), false);
+  test.equal(new FictionalTime(failingTime1), {});
 
   var failingTime2 = 58;
-  test.equal(FictionalTime(failingTime2), false);
+  test.equal(new FictionalTime(failingTime2), {});
 
   var failingTime3 = false;
-  test.equal(FictionalTime(failingTime3), false);
+  test.equal(new FictionalTime(failingTime3), {});
 
   var failingTime4 = undefined;
-  test.equal(FictionalTime(failingTime4), false);
+  test.equal(new FictionalTime(failingTime4), {});
 
   var failingTime5 = {connectedToET: false, beginning: false, units: "none", separators: [":", ":"], declaration: "SUT", declarationLocation: "before"};
-  test.equal(FictionalTime(failingTime5), false);
+  test.equal(new FictionalTime(failingTime5), {});
 
   var failingTime6 = {connectedToET: false, beginning: false, units: [10, 100, 100], separators: false, declaration: "SUT", declarationLocation: "before"};
-  test.equal(FictionalTime(failingTime6), false);
+  test.equal(new FictionalTime(failingTime6), {});
 
   var failingTime7 = {connectedToET: "yes", beginning: false, units: [10, 100, 100], separators: [":", ":"], declaration: "SUT", declarationLocation: "before"};
-  test.equal(FictionalTime(failingTime7), false);
+  test.equal(new FictionalTime(failingTime7), {});
 
   var failingTime8 = {connectedToET: true, beginning: "today", units: [10, 100, 100], separators: [":", ":"], declaration: "SUT", declarationLocation: "before"};
-  test.equal(FictionalTime(failingTime8), false);
+  test.equal(new FictionalTime(failingTime8), {});
 
   var failingTime8 = {connectedToET: false, beginning: false, units: [10, 100, 100], separators: [":", ":"], declaration: "SUT", declarationLocation: false};
-  test.equal(FictionalTime(failingTime8), false);
+  test.equal(new FictionalTime(failingTime8), {});
 
   var failingTime9 = {connectedToET: false, beginning: false, units: [10, 100, 100], separators: [":", ":"], declaration: "SUT", declarationLocation: "never"};
-  test.equal(FictionalTime(failingTime9), false);
+  test.equal(new FictionalTime(failingTime9), {});
 
   var failingTime10 = {connectedToET: false, beginning: false, units: ["bing", "bang"], separators: [":", ":"], declaration: "SUT", declarationLocation: "before"};
-  test.equal(FictionalTime(failingTime10), false);
+  test.equal(new FictionalTime(failingTime10), {});
 
   var failingTime11 = {connectedToET: false, beginning: false, units: [10, 100, 100], separators: [10, 20], declaration: "SUT", declarationLocation: "before"};
-  test.equal(FictionalTime(failingTime11), false);
+  test.equal(new FictionalTime(failingTime11), {});
 
   var failingTime12 = {connectedToET: false, beginning: false, units: [10, 100, 100], separators: [10, 20], declaration: "SUT", declarationLocation: "both"};
-  test.equal(FictionalTime(failingTime12), false);
+  test.equal(new FictionalTime(failingTime12), {});
 });
 
 //

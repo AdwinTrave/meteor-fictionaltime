@@ -227,11 +227,12 @@ FictionalTime = function(fictionalTimeObject){
    */
   this.currentDateTime = function(){
     if(fictionalTime.connectedToET){
-      //TODO
       //first get current time in milliseconds
-      var now = Date.now();
+      var now = Date.now().getMilliseconds();
       //then get the offset
       var offset = new Date().getTimezoneOffset() * 60000;
+
+      return calculate(milliseconds, true, false);
     } else {
       console.log("This fictional time is not connected to Earth date and hence this function is not available.");
       return false;
