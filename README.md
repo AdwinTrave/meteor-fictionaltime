@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/StorytellerCZ/meteor-fictionaltime.png?label=ready&title=Ready)](https://waffle.io/StorytellerCZ/meteor-fictionaltime)
 [![MIT License][license-image]][license-url]
 
 # Under development, use with caution!
