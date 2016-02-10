@@ -115,7 +115,9 @@ FictionalTime = class FictionalTime {
           else
           {
             let count = (this.fictionalTime.units[i-1] / this.fictionalTime.units[i]).toString();
-            if(count[0] == 1)
+            //when in string we can check what is the first number
+            //TODO: we can probably do this in a more elegant way
+            if(count[0] === "1")
             {
               //account for symetric times with  10, 100, etc.
               this.fictionalTime.unitLength[i] = count.length - 1;
@@ -302,7 +304,7 @@ FictionalTime = class FictionalTime {
         //account for getting the max number displayed
         if(count === max){
           parts[i] = 0;
-          parts[i-1] = parseInt(parts[i-1]) - 1;
+          parts[i-1] = parseInt(parts[i-1], 10) - 1;
         }
       } else {
         //calculate how much of the given unit is there in the time
@@ -311,7 +313,7 @@ FictionalTime = class FictionalTime {
         //account for getting the max unit
         if(count === max){
           parts[i] = 0;
-          parts[i-1] = parseInt(parts[i-1]) + 1;
+          parts[i-1] = parseInt(parts[i-1], 10) + 1;
         }
      }
 
