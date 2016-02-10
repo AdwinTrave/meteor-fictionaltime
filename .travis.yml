@@ -6,3 +6,6 @@ before_install:
   - "curl -L https://raw.githubusercontent.com/arunoda/travis-ci-meteor-packages/master/configure.sh | /bin/sh"
 before_script:
   - "export PATH=$HOME/.meteor:$PATH"
+addons:
+    code_climate:
+        repo_token: 7ba53ad1a08c25735a6110e2a3624800057112185d14caa791a0f4541bd01a7a
