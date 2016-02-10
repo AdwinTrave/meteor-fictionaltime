@@ -1,4 +1,5 @@
 [![MIT License][license-image]][license-url]
+[![Build Status](https://travis-ci.org/StorytellerCZ/meteor-fictionaltime.svg?branch=master)](https://travis-ci.org/StorytellerCZ/meteor-fictionaltime)
 [![Stories in Ready](https://badge.waffle.io/StorytellerCZ/meteor-fictionaltime.png?label=ready&title=Ready)](https://waffle.io/StorytellerCZ/meteor-fictionaltime)
 [![Code Climate](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/badges/gpa.svg)](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime)
 [![Test Coverage](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/badges/coverage.svg)](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/coverage)
