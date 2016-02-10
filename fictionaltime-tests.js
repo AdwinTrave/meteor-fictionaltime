@@ -21,7 +21,7 @@ Tinytest.add('Succesfully create a fictionaltime variable from object.', functio
   var ftcorrect = new FictionalTime(correctTime);
   test.equal(typeof(ftcorrect) === "object", true);
 
-  //TODO add more correct tests for all scenarios
+  //#TODO:30 add more correct tests for all scenarios
   test.instanceOf(ftcorrect, FictionalTime);
 });
 
@@ -68,7 +68,7 @@ Tinytest.add('Fail to create fictionaltime when incorrect object is passed in.',
 
 //
 // Test for the different functions
-// TODO add test for non SUT times
+// #TODO:60 add test for non SUT times
 //
 Tinytest.add('toTime()', function(test){
   test.equal(ft.toTime(99000), "0:00:99");

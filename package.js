@@ -1,6 +1,6 @@
 Package.describe({
   name: 'storyteller:fictionaltime',
-  version: '0.1.0',
+  version: '0.1.1',
   // Brief, one-line summary of the package.
   summary: 'Create your own linear fictional time.',
   // URL to the Git repository containing the source code for this package.
@@ -11,19 +11,17 @@ Package.describe({
 })
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.2.0.2');
-  api.use('meteor');
+  api.versionsFrom('1.2.1');
   api.use('ecmascript');
   //consider using:
   //api.use('momentjs:moment');
-  api.addFiles('fictionaltime-class.js');
+  api.addFiles('fictionaltime.js');
 
   //export out the fictionaltime
   api.export("FictionalTime");
 })
 
 Package.onTest(function(api) {
-  api.use('meteor');
   api.use('ecmascript');
   api.use('tinytest');
   api.use('storyteller:fictionaltime');

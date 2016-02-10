@@ -1,5 +1,8 @@
-[![Stories in Ready](https://badge.waffle.io/StorytellerCZ/meteor-fictionaltime.png?label=ready&title=Ready)](https://waffle.io/StorytellerCZ/meteor-fictionaltime)
 [![MIT License][license-image]][license-url]
+[![Stories in Ready](https://badge.waffle.io/StorytellerCZ/meteor-fictionaltime.png?label=ready&title=Ready)](https://waffle.io/StorytellerCZ/meteor-fictionaltime)
+[![Code Climate](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/badges/gpa.svg)](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime)
+[![Test Coverage](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/badges/coverage.svg)](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/coverage)
+[![Issue Count](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/badges/issue_count.svg)](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime)
 
 # Under development, use with caution!
 
