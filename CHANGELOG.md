@@ -1,4 +1,4 @@
-v0.1.2 -
+v0.1.2 - 11.2.2016
 **Fix:**
 * Added missing radix parameter into parseInt
 
