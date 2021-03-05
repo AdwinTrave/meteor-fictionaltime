@@ -16,110 +16,95 @@ import { Log } from 'meteor/logging';
  */
 export class FictionalTime {
   constructor(fictionalTimeObject){
-    if(fictionalTimeObject !== (null || undefined)) {
-      //check that we have the correct format
-      if(
-        Array.isArray(fictionalTimeObject.units) &&
-        Array.isArray(fictionalTimeObject.separators) &&
-        typeof(fictionalTimeObject.declarationLocation) === "string") {
-        //test beginning properly
-        if(fictionalTimeObject.connectedToET) {
-          if(typeof(fictionalTimeObject.beginning) !== "number") {
-            Log.error('Wrong date format for beginning.');
-            return false;
-          }
-        }
-
-        //test declaration location properly
-        //allowed values: before, after, none
-        let decLoc = false;
-        if(fictionalTimeObject.declarationLocation === "before") {
-          if(typeof(fictionalTimeObject.declaration) === "string") {
-            decLoc = true;
-          }
-        }
-        if(!decLoc) {
-          if(fictionalTimeObject.declarationLocation === "after") {
-            if(typeof(fictionalTimeObject.declaration) === "string") {
-              decLoc = true;
-            }
-          }
-        }
-        //#TODO:40 add test cases for this
-        if(!decLoc) {
-          if(fictionalTimeObject.declarationLocation === "both") {
-            if(Array.isArray(fictionalTimeObject.declaration)) {
-              decLoc = true;
-            } else {
-              Log.error('If you have declarations on both ends then they need to be in an array.')
-              return false;
-            }
-          }
-        }
-        if(!decLoc) {
-          if(fictionalTimeObject.declarationLocation === "none") {
-            decLoc = true;
-          }
-        }
-        if(!decLoc) {
-          Log.error('Wrong declaration location.')
-          return false;
-        }
-
-        //test that we have proper values in each array
-        let arraysCheck = false;
-        for(let i = 0; i < fictionalTimeObject.units.length; i++) {
-          if(typeof(fictionalTimeObject.units[i]) !== "number") {
-            arraysCheck = true;
-            break;
-          }
-        }
-
-        if(!arraysCheck) {
-          for(let i = 0; i < fictionalTimeObject.separators.length; i++) {
-            if(typeof(fictionalTimeObject.separators[i]) !== "string")
-            {
-              arraysCheck = true;
-              break;
-            }
-          }
-        }
-
-        if(arraysCheck) {
-          Log.error('Your units and separators are wrong.')
-          return false;
-        }
-
-        //initialize
-        this.fictionalTime = fictionalTimeObject;
-
-        //calculate unit spaces for adding appropriate number of zeroes
-        this.fictionalTime.unitLength = [];
-        for (let i = 0; i < this.fictionalTime.units.length; i++) {
-          if(i === 0) {
-            this.fictionalTime.unitLength[i] = 0;
-          } else {
-            let count = (this.fictionalTime.units[i-1] / this.fictionalTime.units[i]).toString();
-            //when in string we can check what is the first number
-            //TODO: we can probably do this in a more elegant way
-            if(count[0] === "1") {
-              //account for symmetric times with  10, 100, etc.
-              this.fictionalTime.unitLength[i] = count.length - 1;
-            } else {
-              this.fictionalTime.unitLength[i] = count.length;
-            }
-          }
-        }
-
-        Log.debug('Fictional time was established.');
-      } else {
-        Log.error('Incorrect data provided to establish fictional time.');
-        return false;
-      }
-    } else {
+    if (!fictionalTimeObject) {
       Log.error('No data provided to establish fictional time.');
       return false;
     }
+    // Check that we have the correct format
+    if (
+      !Array.isArray(fictionalTimeObject.units) ||
+      !Array.isArray(fictionalTimeObject.separators) ||
+      typeof(fictionalTimeObject.declarationLocation) !== "string"
+    ) {
+      Log.error('Incorrect data provided to establish fictional time.');
+      return false;
+    }
+
+    // Test beginning properly
+    if(fictionalTimeObject.connectedToET && typeof(fictionalTimeObject.beginning) !== "number") {
+      Log.error('Wrong date format for beginning.');
+      return false;
+    }
+
+    //test declaration location properly
+    //allowed values: before, after, both, none
+    let decLoc = false;
+    if((fictionalTimeObject.declarationLocation === "before" || fictionalTimeObject.declarationLocation === "after") && typeof(fictionalTimeObject.declaration) === "string") {
+      decLoc = true;
+    }
+    //#TODO:40 add test cases for this
+    if(!decLoc && fictionalTimeObject.declarationLocation === "both") {
+      if(Array.isArray(fictionalTimeObject.declaration)) {
+        decLoc = true;
+      } else {
+        Log.error('If you have declarations on both ends then they need to be in an array.')
+        return false;
+      }
+    }
+    if(!decLoc && fictionalTimeObject.declarationLocation === "none") {
+      decLoc = true;
+    }
+    if(!decLoc) {
+      Log.error('Wrong declaration location.')
+      return false;
+    }
+
+    //test that we have proper values in each array
+    let arraysCheck = false;
+    for(let i = 0; i < fictionalTimeObject.units.length; i++) {
+      if(typeof(fictionalTimeObject.units[i]) !== "number") {
+        arraysCheck = true;
+        break;
+      }
+    }
+
+    if(!arraysCheck) {
+      for(let i = 0; i < fictionalTimeObject.separators.length; i++) {
+        if(typeof(fictionalTimeObject.separators[i]) !== "string")
+        {
+          arraysCheck = true;
+          break;
+        }
+      }
+    }
+
+    if(arraysCheck) {
+      Log.error('Your units and separators are wrong.')
+      return false;
+    }
+
+    //initialize
+    this.fictionalTime = fictionalTimeObject;
+
+    //calculate unit spaces for adding appropriate number of zeroes
+    this.fictionalTime.unitLength = [];
+    for (let i = 0; i < this.fictionalTime.units.length; i++) {
+      if(i === 0) {
+        this.fictionalTime.unitLength[i] = 0;
+      } else {
+        let count = (this.fictionalTime.units[i-1] / this.fictionalTime.units[i]).toString();
+        //when in string we can check what is the first number
+        //TODO: we can probably do this in a more elegant way
+        if(count[0] === "1") {
+          //account for symmetric times with  10, 100, etc.
+          this.fictionalTime.unitLength[i] = count.length - 1;
+        } else {
+          this.fictionalTime.unitLength[i] = count.length;
+        }
+      }
+    }
+
+    Log.debug('Fictional time was established.');
   }
 
   /**
@@ -128,7 +113,7 @@ export class FictionalTime {
    *
    * Calculates the fictional time from provided milliseconds.
    *
-   * @param {int} milliseconds
+   * @param {Number} milliseconds
    */
   toTime(milliseconds) {
     if(typeof(milliseconds) === "number") {
@@ -144,7 +129,7 @@ export class FictionalTime {
    *
    * Converts the milliseconds to date in the time.
    *
-   * @param {int} milliseconds
+   * @param {Number} milliseconds
    */
   toDate(milliseconds) {
     if(typeof(milliseconds) === "number") {
@@ -161,8 +146,8 @@ export class FictionalTime {
    * Converts the given amount into the given unit.
    * This function is for things like calculating ET years to SUT years.
    *
-   * @param {int} Milliseconds that are to be transfered into that unit
-   * @param {int} Location of the unit in the fictionalTime.units array
+   * @param milliseconds {Number} Milliseconds that are to be transferred into that unit
+   * @param unit {Number} Location of the unit in the fictionalTime.units array
    */
   toUnit(milliseconds, unit){
     //get how many milliseconds is one unit
@@ -178,10 +163,11 @@ export class FictionalTime {
   /**
    * Calculate specific unit from fictional time to milliseconds
    * @method unitToMilliseconds
+   * @public
    *
-   * @param {int} count Number of units
-   * @param {int} unit From what unit are we doing the conversion
-   * @return {int} The calculated number in milliseconds
+   * @param count {Number} Number of units
+   * @param unit {Number} From what unit are we doing the conversion
+   * @return {Number} The calculated number in milliseconds
    */
   unitToMilliseconds(count, unit) {
     //get how many milliseconds is one unit
@@ -197,7 +183,7 @@ export class FictionalTime {
    *
    * Gives you the current fictional date and time if linked to ET
    *
-   * @return {string}
+   * @return {String}
    */
   currentDateTime() {
     if(this.fictionalTime.connectedToET){
@@ -218,28 +204,26 @@ export class FictionalTime {
    * @private
    *
    *
-   * @param {int} milliseconds
-   * @param {boolean} date
-   * @param {boolean} shorten
-   * @return {string}
+   * @param {Number} milliseconds
+   * @param {Boolean} date
+   * @param {Boolean} shorten
+   * @return {String}
    */
   calculate(milliseconds, date, shorten) {
     //#TODO:10 account for input with minus
     //account for dates
     let minus = false;
-    if(this.fictionalTime.connectedToET) {
-      if(date) {
-        //first figure out if we are before or after the time establishment
-        if(milliseconds < this.fictionalTime.beginning){
-          minus = true;
-        }
+    if(this.fictionalTime.connectedToET && date) {
+      //first figure out if we are before or after the time establishment
+      if(milliseconds < this.fictionalTime.beginning){
+        minus = true;
+      }
 
-        //subtract from milliseconds the establishment date milliseconds
-        milliseconds = milliseconds - this.fictionalTime.beginning;
+      //subtract from milliseconds the establishment date milliseconds
+      milliseconds = milliseconds - this.fictionalTime.beginning;
 
-        if(milliseconds < 0) {
-          milliseconds = milliseconds * -1;
-        }
+      if(milliseconds < 0) {
+        milliseconds = milliseconds * -1;
       }
     }
 
@@ -327,8 +311,8 @@ export class FictionalTime {
    * @method defaultZeroes
    * @private
    *
-   * @param {array} parts
-   * @return {array} array of strings to be put together
+   * @param {[String]} parts
+   * @return {Array} array of strings to be put together
    */
   defaultZeroes(parts) {
     let returnParts = [];
@@ -371,9 +355,9 @@ export class FictionalTime {
    * @method formatTime
    * @private
    *
-   * @param {array} parts of the time
-   * @param {boolean} minus
-   * @return {string} the final look of the time
+   * @param {[String]} parts of the time
+   * @param {Boolean} minus
+   * @return {String} the final look of the time
    */
   formatTime(parts, minus) {
      //return the string to display the time
