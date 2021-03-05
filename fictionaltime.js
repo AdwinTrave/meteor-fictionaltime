@@ -1,9 +1,9 @@
-"use strict";
+import { Log } from 'meteor/logging';
 /**
  * storyteller:fictionaltime
  * Create your own linear fictional time.
  *
- * @see {https://github.com/AdwinTrave/meteor-fictionaltime|Fictional Time on Github}
+ * @see {https://github.com/StorytellerCZ/meteor-fictionaltime|Fictional Time on Github}
  *
  * @license MIT
  */
@@ -14,80 +14,69 @@
  * Creates a fictional time from fictional time object.
  *
  */
-FictionalTime = class FictionalTime {
+export class FictionalTime {
   constructor(fictionalTimeObject){
-    if(fictionalTimeObject !== (null || undefined))
-    {
+    if(fictionalTimeObject !== (null || undefined)) {
       //check that we have the correct format
-      if( typeof(fictionalTimeObject.connectedToET) === "boolean" &&
-      Array.isArray(fictionalTimeObject.units) &&
-      Array.isArray(fictionalTimeObject.separators) &&
-      typeof(fictionalTimeObject.declarationLocation) === "string")
-      {
+      if(
+        Array.isArray(fictionalTimeObject.units) &&
+        Array.isArray(fictionalTimeObject.separators) &&
+        typeof(fictionalTimeObject.declarationLocation) === "string") {
         //test beginning properly
-        if(fictionalTimeObject.connectedToET === true)
-        {
-          if(typeof(fictionalTimeObject.beginning) !== "number")
-          {
-            console.log("Wrong date format for beginning.");
-            //#TODO:90 instead of return false throw an error/exception that is not going to crash the app
+        if(fictionalTimeObject.connectedToET) {
+          if(typeof(fictionalTimeObject.beginning) !== "number") {
+            Log.error('Wrong date format for beginning.');
             return false;
           }
         }
 
         //test declaration location properly
         //allowed values: before, after, none
-        var decLoc = false;
-        if(fictionalTimeObject.declarationLocation === "before"){
-          if(typeof(fictionalTimeObject.declaration) === "string")
-          {
+        let decLoc = false;
+        if(fictionalTimeObject.declarationLocation === "before") {
+          if(typeof(fictionalTimeObject.declaration) === "string") {
             decLoc = true;
           }
         }
-        if(!decLoc){
-          if(fictionalTimeObject.declarationLocation === "after"){
-            if(typeof(fictionalTimeObject.declaration) === "string")
-            {
+        if(!decLoc) {
+          if(fictionalTimeObject.declarationLocation === "after") {
+            if(typeof(fictionalTimeObject.declaration) === "string") {
               decLoc = true;
             }
           }
         }
         //#TODO:40 add test cases for this
-        if(!decLoc){
-          if(fictionalTimeObject.declarationLocation === "both"){
-            if(Array.isArray(fictionalTimeObject.declaration)){
+        if(!decLoc) {
+          if(fictionalTimeObject.declarationLocation === "both") {
+            if(Array.isArray(fictionalTimeObject.declaration)) {
               decLoc = true;
             } else {
-              console.log("If you have declarations on both ends then they need to be in an array.");
+              Log.error('If you have declarations on both ends then they need to be in an array.')
               return false;
             }
           }
         }
-        if(!decLoc)
-        {
-          if(fictionalTimeObject.declarationLocation === "none"){
+        if(!decLoc) {
+          if(fictionalTimeObject.declarationLocation === "none") {
             decLoc = true;
           }
         }
-        if(!decLoc){
-          console.log("Wrong declaration location.");
+        if(!decLoc) {
+          Log.error('Wrong declaration location.')
           return false;
         }
 
         //test that we have proper values in each array
         let arraysCheck = false;
-        for(let i = 0; i < fictionalTimeObject.units.length; i++)
-        {
-          if(typeof(fictionalTimeObject.units[i]) !== "number")
-          {
+        for(let i = 0; i < fictionalTimeObject.units.length; i++) {
+          if(typeof(fictionalTimeObject.units[i]) !== "number") {
             arraysCheck = true;
             break;
           }
         }
 
-        if(!arraysCheck){
-          for(let i = 0; i < fictionalTimeObject.separators.length; i++)
-          {
+        if(!arraysCheck) {
+          for(let i = 0; i < fictionalTimeObject.separators.length; i++) {
             if(typeof(fictionalTimeObject.separators[i]) !== "string")
             {
               arraysCheck = true;
@@ -96,9 +85,8 @@ FictionalTime = class FictionalTime {
           }
         }
 
-        if(arraysCheck)
-        {
-          console.log("Your units and separators are wrong.");
+        if(arraysCheck) {
+          Log.error('Your units and separators are wrong.')
           return false;
         }
 
@@ -108,39 +96,28 @@ FictionalTime = class FictionalTime {
         //calculate unit spaces for adding appropriate number of zeroes
         this.fictionalTime.unitLength = [];
         for (let i = 0; i < this.fictionalTime.units.length; i++) {
-          if(i === 0)
-          {
+          if(i === 0) {
             this.fictionalTime.unitLength[i] = 0;
-          }
-          else
-          {
+          } else {
             let count = (this.fictionalTime.units[i-1] / this.fictionalTime.units[i]).toString();
             //when in string we can check what is the first number
             //TODO: we can probably do this in a more elegant way
-            if(count[0] === "1")
-            {
-              //account for symetric times with  10, 100, etc.
+            if(count[0] === "1") {
+              //account for symmetric times with  10, 100, etc.
               this.fictionalTime.unitLength[i] = count.length - 1;
-            }
-            else
-            {
+            } else {
               this.fictionalTime.unitLength[i] = count.length;
             }
           }
         }
 
-        console.log("Fictional time was established.");
-        //return this;
-      }
-      else
-      {
-        console.log("Incorrect data provided to establish fictional time.");
+        Log.debug('Fictional time was established.');
+      } else {
+        Log.error('Incorrect data provided to establish fictional time.');
         return false;
       }
-    }
-    else
-    {
-      console.log("No data provided to establish fictional time.");
+    } else {
+      Log.error('No data provided to establish fictional time.');
       return false;
     }
   }
@@ -149,13 +126,12 @@ FictionalTime = class FictionalTime {
    * @method toTime
    * @public
    *
-   * Caluculates the fictional time from provided milliseconds.
+   * Calculates the fictional time from provided milliseconds.
    *
    * @param {int} milliseconds
    */
-  toTime(milliseconds)
-  {
-    if(typeof(milliseconds) === "number"){
+  toTime(milliseconds) {
+    if(typeof(milliseconds) === "number") {
       return this.calculate(milliseconds, false, false);
     } else {
       return false;
@@ -170,9 +146,8 @@ FictionalTime = class FictionalTime {
    *
    * @param {int} milliseconds
    */
-  toDate(milliseconds)
-  {
-    if(typeof(milliseconds) === "number"){
+  toDate(milliseconds) {
+    if(typeof(milliseconds) === "number") {
       return this.calculate(milliseconds, true, false);
     } else {
       return false;
@@ -208,8 +183,7 @@ FictionalTime = class FictionalTime {
    * @param {int} unit From what unit are we doing the conversion
    * @return {int} The calculated number in milliseconds
    */
-  unitToMilliseconds(count, unit)
-  {
+  unitToMilliseconds(count, unit) {
     //get how many milliseconds is one unit
     let oneUnit = this.fictionalTime.units[unit];
     for (let i = unit + 1; i < this.fictionalTime.units.length; i++) {
@@ -225,7 +199,7 @@ FictionalTime = class FictionalTime {
    *
    * @return {string}
    */
-  currentDateTime(){
+  currentDateTime() {
     if(this.fictionalTime.connectedToET){
       //first get current time in milliseconds
       let now = Date.now().getMilliseconds();
@@ -234,7 +208,7 @@ FictionalTime = class FictionalTime {
 
       return this.calculate(milliseconds, true, false);
     } else {
-      console.log("This fictional time is not connected to Earth date and hence this function is not available.");
+      Log.error('This fictional time is not connected to Earth date and hence this function is not available.');
       return false;
     }
   }
@@ -249,13 +223,12 @@ FictionalTime = class FictionalTime {
    * @param {boolean} shorten
    * @return {string}
    */
-  calculate(milliseconds, date, shorten)
-  {
+  calculate(milliseconds, date, shorten) {
     //#TODO:10 account for input with minus
     //account for dates
     let minus = false;
-    if(this.fictionalTime.connectedToET){
-      if(date){
+    if(this.fictionalTime.connectedToET) {
+      if(date) {
         //first figure out if we are before or after the time establishment
         if(milliseconds < this.fictionalTime.beginning){
           minus = true;
@@ -264,7 +237,7 @@ FictionalTime = class FictionalTime {
         //subtract from milliseconds the establishment date milliseconds
         milliseconds = milliseconds - this.fictionalTime.beginning;
 
-        if(milliseconds < 0){
+        if(milliseconds < 0) {
           milliseconds = milliseconds * -1;
         }
       }
@@ -291,14 +264,14 @@ FictionalTime = class FictionalTime {
 
       //calculate what is the maximum of the given unit
       let max = 0;
-      if(i !== 0){
+      if(i !== 0) {
         max = unitsMilliseconds[i-1] / unitsMilliseconds[i];
       }
 
       //if this is a date before the establishment of time
       //the last units which is assumed to be equivalent to years
       //should be counting down compare to the other units
-      if(date && minus && i === 0){
+      if(date && minus && i === 0) {
         //get the correct number that is going to be increasing
         parts[i] = max-count;
         //account for getting the max number displayed
@@ -324,7 +297,7 @@ FictionalTime = class FictionalTime {
 
     //if one of the separators is space and if beyond it there are no values,
     //just get rid of that part all the way to separator
-    //shorten variable dictates this behavior
+    //shorten constiable dictates this behavior
 
     //add missing zeroes to units
     parts = this.defaultZeroes(parts);
@@ -332,7 +305,7 @@ FictionalTime = class FictionalTime {
     //format time
     let outputString = this.formatTime(parts, minus);
 
-    if(date){
+    if(date) {
       //add time declaration
       if(this.fictionalTime.declarationLocation === "before"){
        outputString = this.fictionalTime.declaration + outputString;
@@ -357,19 +330,18 @@ FictionalTime = class FictionalTime {
    * @param {array} parts
    * @return {array} array of strings to be put together
    */
-  defaultZeroes(parts)
-  {
+  defaultZeroes(parts) {
     let returnParts = [];
 
     for (let i = 0; i < parts.length; i++) {
       //the first number does not need additional zeroes
-      if(i !== 0){
+      if(i !== 0) {
         let number = parts[i].toString();
         let max = this.fictionalTime.units[i-1].toString();
         let add;
 
         //first determine how many zeroes need to be added
-        if(max[0] === "1" && max[max.length-1] === "0"){
+        if(max[0] === "1" && max[max.length-1] === "0") {
           add = (max.length - 1) - number.length;
 
           //prevent incorrect minus values
@@ -403,22 +375,20 @@ FictionalTime = class FictionalTime {
    * @param {boolean} minus
    * @return {string} the final look of the time
    */
-  formatTime(parts, minus)
-  {
+  formatTime(parts, minus) {
      //return the string to display the time
      let outputString = "";
      for (let i = 0; i < parts.length; i++) {
        //unit declaration before time
-       if(i === 0 && minus)
-       {
+       if(i === 0 && minus) {
          //add the minus before declaration
          outputString += "-";
-      }
+       }
 
       outputString += parts[i];
 
       //account for last empty separator
-      if(i !== this.fictionalTime.separators.length){
+      if(i !== this.fictionalTime.separators.length) {
         outputString += this.fictionalTime.separators[i];
       }
      }

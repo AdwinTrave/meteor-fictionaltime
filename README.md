@@ -1,6 +1,5 @@
 [![MIT License][license-image]][license-url]
 [![Build Status](https://travis-ci.org/StorytellerCZ/meteor-fictionaltime.svg?branch=master)](https://travis-ci.org/StorytellerCZ/meteor-fictionaltime)
-[![Stories in Ready](https://badge.waffle.io/StorytellerCZ/meteor-fictionaltime.png?label=ready&title=Ready)](https://waffle.io/StorytellerCZ/meteor-fictionaltime)
 [![Code Climate](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/badges/gpa.svg)](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime)
 [![Test Coverage](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/badges/coverage.svg)](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/coverage)
 [![Issue Count](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime/badges/issue_count.svg)](https://codeclimate.com/github/AdwinTrave/meteor-fictionaltime)
@@ -16,7 +15,7 @@ Check out examples at (website under development): [fictionaltime.meteor.com](ht
 
 Now you can create your own fictional time anywhere in the code like this:
 ```javascript
-var myTime = new FictionalTime({connectedToET: false, beginning: false, units: [10, 100, 1000], separators: [":", ":"], declaration: "SUT", declarationLocation: "before"});
+const myTime = new FictionalTime({connectedToET: false, beginning: false, units: [10, 100, 1000], separators: [":", ":"], declaration: "SUT", declarationLocation: "before"});
 ```
 
 ## How to use
@@ -34,8 +33,8 @@ First add the package to your project:
 
 Then you can initialize fictional time anywhere in your code.
 ```javascript
-var sut = {connectedToET: false, beginning: false, units: [500, 10, 100, 100, 1000], separators: [".", " ", ":", ":"], declaration: "SUT ", declarationLocation: "before"};
-var sutTime = new FictionalTime(sut);
+const sut = {connectedToET: false, beginning: false, units: [500, 10, 100, 100, 1000], separators: [".", " ", ":", ":"], declaration: "SUT ", declarationLocation: "before"};
+const sutTime = new FictionalTime(sut);
 ```
 
 ### Available functions

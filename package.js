@@ -1,20 +1,19 @@
 Package.describe({
   name: 'storyteller:fictionaltime',
-  version: '0.1.2',
+  version: '0.2.0',
   // Brief, one-line summary of the package.
   summary: 'Create your own linear fictional time.',
   // URL to the Git repository containing the source code for this package.
-  git: 'https://github.com/AdwinTrave/meteor-fictionaltime',
+  git: 'https://github.com/StorytellerCZ/meteor-fictionaltime',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'
 })
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.2.1');
+  api.versionsFrom('1.9');
   api.use('ecmascript');
-  //consider using:
-  //api.use('momentjs:moment');
+  api.use('logging')
   api.addFiles('fictionaltime.js');
 
   //export out the fictionaltime
