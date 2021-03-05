@@ -15,7 +15,7 @@ const anchorTime = new FictionalTime(anchoredTime);
 
 //time with strange units
 const strangeTime = {};
-const strTime;
+const strTime = null;
 
 Tinytest.add('Succesfully create a fictionaltime constiable from object.', function (test) {
   const ftCorrect = new FictionalTime(correctTime);
