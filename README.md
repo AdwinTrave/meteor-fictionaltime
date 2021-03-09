@@ -33,7 +33,14 @@ First add the package to your project:
 
 Then you can initialize fictional time anywhere in your code.
 ```javascript
-const sut = {connectedToET: false, beginning: false, units: [500, 10, 100, 100, 1000], separators: [".", " ", ":", ":"], declaration: "SUT ", declarationLocation: "before"};
+const sut = {
+  connectedToET: false,
+  beginning: false,
+  units: [500, 10, 100, 100, 1000],
+  separators: [".", " ", ":", ":"],
+  declaration: "SUT ",
+  declarationLocation: "before"
+};
 const sutTime = new FictionalTime(sut);
 ```
 

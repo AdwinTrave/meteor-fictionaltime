@@ -13,11 +13,10 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.9');
   api.use('ecmascript');
-  api.use('logging')
-  api.addFiles('fictionaltime.js');
+  api.use('logging');
 
   //export out the fictionaltime
-  api.export("FictionalTime");
+  api.mainModule('./fictionaltime.js');
 })
 
 Package.onTest(function(api) {

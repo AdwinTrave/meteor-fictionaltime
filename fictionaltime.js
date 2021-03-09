@@ -114,6 +114,7 @@ export class FictionalTime {
    * Calculates the fictional time from provided milliseconds.
    *
    * @param {Number} milliseconds
+   * @return {String}
    */
   toTime(milliseconds) {
     if(typeof(milliseconds) === "number") {
@@ -127,9 +128,10 @@ export class FictionalTime {
    * @method toDate
    * @public
    *
-   * Converts the milliseconds to date in the time.
+   * Converts the milliseconds to date time in the fictional time.
    *
    * @param {Number} milliseconds
+   * @return {String}
    */
   toDate(milliseconds) {
     if(typeof(milliseconds) === "number") {
@@ -188,11 +190,11 @@ export class FictionalTime {
   currentDateTime() {
     if(this.fictionalTime.connectedToET){
       //first get current time in milliseconds
-      let now = Date.now().getMilliseconds();
+      let now = new Date().getTime();
       //then get the offset
       let offset = new Date().getTimezoneOffset() * 60000;
 
-      return this.calculate(milliseconds, true, false);
+      return this.calculate(now + offset, true, false);
     } else {
       Log.error('This fictional time is not connected to Earth date and hence this function is not available.');
       return false;
@@ -206,7 +208,7 @@ export class FictionalTime {
    *
    * @param {Number} milliseconds
    * @param {Boolean} date
-   * @param {Boolean} shorten
+   * @param {Boolean} shorten TODO
    * @return {String}
    */
   calculate(milliseconds, date, shorten) {
@@ -221,7 +223,6 @@ export class FictionalTime {
 
       //subtract from milliseconds the establishment date milliseconds
       milliseconds = milliseconds - this.fictionalTime.beginning;
-
       if(milliseconds < 0) {
         milliseconds = milliseconds * -1;
       }
@@ -230,19 +231,20 @@ export class FictionalTime {
     //now get the numbers for the parts of the fictional time
     let parts = [];
 
-    //figure out how many milliseconds is there for each unit for optimized calculations
+    //figure out how many milliseconds are there for each unit for optimized calculations
     let unitsMilliseconds = [];
-    for (let i = 0; i < this.fictionalTime.units.length; i++) {
+    this.fictionalTime.units.forEach((unit, i) => {
       //calculate how much milliseconds does the current unit contain
-      unitsMilliseconds[i] = this.fictionalTime.units[i];
+      unitsMilliseconds[i] = unit;
 
       //multiply with the remaining units to get to milliseconds
       for (let k = i+1; k < this.fictionalTime.units.length; k++) {
         unitsMilliseconds[i] = unitsMilliseconds[i] * this.fictionalTime.units[k];
       }
-    }
+    })
+    // Log.debug(unitsMilliseconds)
 
-    for (let i = 0; i < this.fictionalTime.units.length; i++) {
+    this.fictionalTime.units.forEach((unit, i) => {
       //first calculate how many units are there
       let count = Math.floor( Math.abs( milliseconds / unitsMilliseconds[i]) );
 
@@ -256,13 +258,8 @@ export class FictionalTime {
       //the last units which is assumed to be equivalent to years
       //should be counting down compare to the other units
       if(date && minus && i === 0) {
-        //get the correct number that is going to be increasing
-        parts[i] = max-count;
-        //account for getting the max number displayed
-        if(count === max){
-          parts[i] = 0;
-          parts[i-1] = parseInt(parts[i-1], 10) - 1;
-        }
+        //get the correct number that is going to be decreasing
+        parts[i] = count;
       } else {
         //calculate how much of the given unit is there in the time
         parts[i] = count;
@@ -276,8 +273,8 @@ export class FictionalTime {
 
      //reduce the time by the unit calculated
      milliseconds = milliseconds - (count * unitsMilliseconds[i]);
-    }
-    //console.log(parts);
+    })
+    // Log.debug(parts);
 
     //if one of the separators is space and if beyond it there are no values,
     //just get rid of that part all the way to separator
@@ -290,17 +287,18 @@ export class FictionalTime {
     let outputString = this.formatTime(parts, minus);
 
     if(date) {
+      const { declaration } = this.fictionalTime
       //add time declaration
       if(this.fictionalTime.declarationLocation === "before"){
-       outputString = this.fictionalTime.declaration + outputString;
+       outputString = `${declaration}${outputString}`;
       }
 
       if(this.fictionalTime.declarationLocation === "after"){
-        outputString += this.fictionalTime.declaration;
+        outputString += declaration;
       }
 
       if(this.fictionalTime.declarationLocation === "both"){
-        outputString = this.fictionalTime.declaration[0] + outputString + this.fictionalTime.declaration[1];
+        outputString = `${declaration[0]}${outputString}${declaration[1]}`;
       }
     }
 
