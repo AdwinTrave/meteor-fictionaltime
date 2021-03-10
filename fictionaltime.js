@@ -118,7 +118,7 @@ export class FictionalTime {
    */
   toTime(milliseconds) {
     if(typeof(milliseconds) === "number") {
-      return this.calculate(milliseconds, false, false);
+      return this.addDeclarator(this.calculate(milliseconds, false, true));
     } else {
       return false;
     }
@@ -274,7 +274,6 @@ export class FictionalTime {
      //reduce the time by the unit calculated
      milliseconds = milliseconds - (count * unitsMilliseconds[i]);
     })
-    // Log.debug(parts);
 
     //if one of the separators is space and if beyond it there are no values,
     //just get rid of that part all the way to separator
@@ -282,27 +281,36 @@ export class FictionalTime {
 
     //add missing zeroes to units
     parts = this.defaultZeroes(parts);
-
+    // Log.debug(parts);
     //format time
-    let outputString = this.formatTime(parts, minus);
+    let outputString = this.formatTime(parts, minus, shorten);
 
     if(date) {
-      const { declaration } = this.fictionalTime
-      //add time declaration
-      if(this.fictionalTime.declarationLocation === "before"){
-       outputString = `${declaration}${outputString}`;
-      }
-
-      if(this.fictionalTime.declarationLocation === "after"){
-        outputString += declaration;
-      }
-
-      if(this.fictionalTime.declarationLocation === "both"){
-        outputString = `${declaration[0]}${outputString}${declaration[1]}`;
-      }
+      outputString = this.addDeclarator(outputString)
     }
 
     return outputString;
+  }
+
+  /**
+   * Add time declaration to time string
+   * @param dateString {String}
+   * @return {String}
+   */
+  addDeclarator(dateString) {
+    const { declaration } = this.fictionalTime
+    if(this.fictionalTime.declarationLocation === "before"){
+      dateString = `${declaration}${dateString}`;
+    }
+
+    if(this.fictionalTime.declarationLocation === "after"){
+      dateString += declaration;
+    }
+
+    if(this.fictionalTime.declarationLocation === "both"){
+      dateString = `${declaration[0]}${dateString}${declaration[1]}`;
+    }
+    return dateString
   }
 
   /**
@@ -349,31 +357,47 @@ export class FictionalTime {
     return returnParts;
   }
 
+  regex = new RegExp(/^[0]*$/)
+
   /**
    * @method formatTime
    * @private
    *
    * @param {[String]} parts of the time
    * @param {Boolean} minus
+   * @param {Boolean} shorten
    * @return {String} the final look of the time
    */
-  formatTime(parts, minus) {
-     //return the string to display the time
-     let outputString = "";
-     for (let i = 0; i < parts.length; i++) {
-       //unit declaration before time
-       if(i === 0 && minus) {
-         //add the minus before declaration
-         outputString += "-";
-       }
+  formatTime(parts, minus, shorten) {
+    //return the string to display the time
+    let outputString = "";
+    let shortenerStop = false;
 
-      outputString += parts[i];
-
+    const combineUnitSeparator = (outputString, part, i) => {
+      outputString += part;
       //account for last empty separator
       if(i !== this.fictionalTime.separators.length) {
         outputString += this.fictionalTime.separators[i];
       }
-     }
-     return outputString;
+      return outputString;
+    }
+
+    parts.forEach((part, i) => {
+      //unit declaration before time
+      if(i === 0 && minus) {
+        //add the minus before declaration
+        outputString += "-";
+      }
+
+      if (shorten && !shortenerStop) {
+        if (!this.regex.test(part)) {
+          outputString = combineUnitSeparator(outputString, part, i)
+          shortenerStop = true
+        }
+      } else {
+        outputString = combineUnitSeparator(outputString, part, i)
+      }
+    });
+    return outputString;
   }
 }

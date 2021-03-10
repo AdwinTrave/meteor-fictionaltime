@@ -1,6 +1,10 @@
-## v0.2 - unreleased
+## v0.3 - 10.3.2021
+* Implemented shortening feature
+
+## v0.2 - 9.3.2021
 * Replaced console logging with Meteor logging
 * Fixed typos
+* Fixed bugs
 * Bumped minimum Meteor version to 1.9
 * Now using modern import/export
 * Code modernization (less lines of code and hopefully some performance)
