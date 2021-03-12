@@ -1,3 +1,6 @@
+## v0.4 - 12.3.2021
+* Added new `millisecondsToET` utility function
+
 ## v0.3 - 10.3.2021
 * Implemented shortening feature
 

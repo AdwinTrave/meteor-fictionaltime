@@ -181,24 +181,67 @@ export class FictionalTime {
   }
 
   /**
+   * Converts milliseconds to days, hours, minutes, seconds
+   * @method millisecondsToET
+   * @public
+   *
+   * @aram milliseconds {Number}
+   * @return {Object}
+   */
+  millisecondsToET(milliseconds) {
+    let seconds = Math.floor(milliseconds / 1000)
+    let minutes = Math.floor(seconds / 60)
+    seconds = seconds % 60
+    let hours = Math.floor(minutes / 60)
+    minutes = minutes % 60
+    let days = Math.floor(hours / 24)
+    hours = hours % 24
+    const ms = Math.floor((milliseconds % 1000) * 1000) / 1000
+    return {
+      days,
+      hours,
+      minutes,
+      seconds,
+      milliseconds: ms,
+    }
+  }
+
+  /**
    * @method currentDateTime
+   * @public
    *
    * Gives you the current fictional date and time if linked to ET
    *
    * @return {String}
    */
   currentDateTime() {
-    if(this.fictionalTime.connectedToET){
-      //first get current time in milliseconds
-      let now = new Date().getTime();
-      //then get the offset
-      let offset = new Date().getTimezoneOffset() * 60000;
-
-      return this.calculate(now + offset, true, false);
-    } else {
+    if (!this.fictionalTime.connectedToET) {
       Log.error('This fictional time is not connected to Earth date and hence this function is not available.');
-      return false;
+      return null;
     }
+    //first get current time in milliseconds
+    let now = new Date().getTime();
+    //then get the offset
+    let offset = new Date().getTimezoneOffset() * 60000;
+
+    return this.calculate(now + offset, true, false);
+  }
+
+  /**
+   * @method countdownToTimeStart
+   * @public
+   *
+   * @return {String}
+   */
+  countdownToTimeStart() {
+    if (!this.fictionalTime.connectedToET || new Date().getTime() >= this.fictionalTime.beginning) return null
+
+    //first get current time in milliseconds
+    let now = new Date().getTime();
+    //then get the offset
+    let offset = new Date().getTimezoneOffset() * 60000;
+
+    return this.calculate(now + offset, true, false);
   }
 
   /**
