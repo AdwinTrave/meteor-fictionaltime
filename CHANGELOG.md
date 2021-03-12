@@ -1,3 +1,6 @@
+## v0.4.1 - 12.3.2021
+* Fix potential bugs with `toUnit` and `unitToMilliseconds` input
+
 ## v0.4 - 12.3.2021
 * Added new `millisecondsToET` utility function
 

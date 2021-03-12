@@ -152,9 +152,10 @@ export class FictionalTime {
    * @param unit {Number} Location of the unit in the fictionalTime.units array
    */
   toUnit(milliseconds, unit){
+    const unitIndex = Number(unit)
     //get how many milliseconds is one unit
-    let oneUnit = this.fictionalTime.units[unit];
-    for (let i = unit + 1; i < this.fictionalTime.units.length; i++) {
+    let oneUnit = this.fictionalTime.units[unitIndex];
+    for (let i = unitIndex + 1; i < this.fictionalTime.units.length; i++) {
       oneUnit = oneUnit * this.fictionalTime.units[i];
     }
 
@@ -172,9 +173,10 @@ export class FictionalTime {
    * @return {Number} The calculated number in milliseconds
    */
   unitToMilliseconds(count, unit) {
+    const unitIndex = Number(unit)
     //get how many milliseconds is one unit
-    let oneUnit = this.fictionalTime.units[unit];
-    for (let i = unit + 1; i < this.fictionalTime.units.length; i++) {
+    let oneUnit = this.fictionalTime.units[unitIndex];
+    for (let i = unitIndex + 1; i < this.fictionalTime.units.length; i++) {
       oneUnit = oneUnit * this.fictionalTime.units[i];
     }
     return count * oneUnit;

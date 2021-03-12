@@ -1,6 +1,6 @@
 Package.describe({
   name: 'storyteller:fictionaltime',
-  version: '0.4.0',
+  version: '0.4.1',
   // Brief, one-line summary of the package.
   summary: 'Create your own linear fictional time.',
   // URL to the Git repository containing the source code for this package.
