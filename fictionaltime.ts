@@ -1,4 +1,5 @@
-import { Log } from 'meteor/logging';
+import { Log } from 'meteor/logging'
+import type { EarthTimeBreakdown } from './fictionaltime.d'
 /**
  * storyteller:fictionaltime
  * Create your own linear fictional time.
@@ -116,7 +117,7 @@ export class FictionalTime {
    * @param {Number} milliseconds
    * @return {String}
    */
-  toTime(milliseconds) {
+  toTime(milliseconds: number) {
     if(typeof(milliseconds) === "number") {
       return this.addDeclarator(this.calculate(milliseconds, false, true));
     } else {
@@ -133,7 +134,7 @@ export class FictionalTime {
    * @param {Number} milliseconds
    * @return {String}
    */
-  toDate(milliseconds) {
+  toDate(milliseconds: number) {
     if(typeof(milliseconds) === "number") {
       return this.calculate(milliseconds, true, false);
     } else {
@@ -151,7 +152,7 @@ export class FictionalTime {
    * @param milliseconds {Number} Milliseconds that are to be transferred into that unit
    * @param unit {Number} Location of the unit in the fictionalTime.units array
    */
-  toUnit(milliseconds, unit){
+  toUnit(milliseconds: number, unit: number): number {
     const unitIndex = Number(unit)
     //get how many milliseconds is one unit
     let oneUnit = this.fictionalTime.units[unitIndex];
@@ -172,7 +173,7 @@ export class FictionalTime {
    * @param unit {Number} From what unit are we doing the conversion
    * @return {Number} The calculated number in milliseconds
    */
-  unitToMilliseconds(count, unit) {
+  unitToMilliseconds(count: number, unit: number): number {
     const unitIndex = Number(unit)
     //get how many milliseconds is one unit
     let oneUnit = this.fictionalTime.units[unitIndex];
@@ -190,7 +191,7 @@ export class FictionalTime {
    * @aram milliseconds {Number}
    * @return {Object}
    */
-  millisecondsToET(milliseconds) {
+  millisecondsToET(milliseconds: number): EarthTimeBreakdown {
     let seconds = Math.floor(milliseconds / 1000)
     let minutes = Math.floor(seconds / 60)
     seconds = seconds % 60
@@ -216,7 +217,7 @@ export class FictionalTime {
    *
    * @return {String}
    */
-  currentDateTime() {
+  currentDateTime(): null | string {
     if (!this.fictionalTime.connectedToET) {
       Log.error('This fictional time is not connected to Earth date and hence this function is not available.');
       return null;
@@ -235,7 +236,7 @@ export class FictionalTime {
    *
    * @return {String}
    */
-  countdownToTimeStart() {
+  countdownToTimeStart(): null | string {
     if (!this.fictionalTime.connectedToET || new Date().getTime() >= this.fictionalTime.beginning) return null
 
     //first get current time in milliseconds
@@ -256,7 +257,7 @@ export class FictionalTime {
    * @param {Boolean} shorten TODO
    * @return {String}
    */
-  calculate(milliseconds, date, shorten) {
+  calculate(milliseconds: number, date: boolean, shorten: boolean): string {
     //#TODO:10 account for input with minus
     //account for dates
     let minus = false;
@@ -342,7 +343,7 @@ export class FictionalTime {
    * @param dateString {String}
    * @return {String}
    */
-  addDeclarator(dateString) {
+  addDeclarator(dateString: string): string {
     const { declaration } = this.fictionalTime
     if(this.fictionalTime.declarationLocation === "before"){
       dateString = `${declaration}${dateString}`;
@@ -365,7 +366,7 @@ export class FictionalTime {
    * @param {[String]} parts
    * @return {Array} array of strings to be put together
    */
-  defaultZeroes(parts) {
+  defaultZeroes(parts: string[]): string[] {
     let returnParts = [];
 
     for (let i = 0; i < parts.length; i++) {
@@ -413,7 +414,7 @@ export class FictionalTime {
    * @param {Boolean} shorten
    * @return {String} the final look of the time
    */
-  formatTime(parts, minus, shorten) {
+  formatTime(parts: string[], minus: boolean, shorten: boolean): string {
     //return the string to display the time
     let outputString = "";
     let shortenerStop = false;

@@ -8,7 +8,6 @@
 
 # Fictional time
 Fictional time allows you to create, display and convert units to and from your own (symetric) fictional time.
-Check out examples at (website under development): [fictionaltime.meteor.com](http://fictionaltime.meteor.com).
 
 ## Installation
 `meteor add storyteller:fictionaltime`

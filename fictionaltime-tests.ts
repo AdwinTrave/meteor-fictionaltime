@@ -1,3 +1,5 @@
+import { FictionalTime } from './fictionaltime'
+
 /**
  * Tinytest for fictionaltime
  */
