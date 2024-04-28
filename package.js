@@ -21,8 +21,8 @@ Package.onUse(function(api) {
 })
 
 Package.onTest(function(api) {
-  api.use('ecmascript');
+  api.use(['ecmascript', 'typescript']);
   api.use('tinytest');
   api.use('storyteller:fictionaltime');
-  api.addFiles('fictionaltime-tests.ts');
+  api.mainModule('fictionaltime-tests.ts');
 })
