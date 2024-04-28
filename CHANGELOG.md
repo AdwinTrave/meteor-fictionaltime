@@ -1,7 +1,8 @@
-## v0.5.0 - 5.6.2023
+## v0.5.0 - 28.4.2024
 * Update minimum Meteor version to v1.12.1
+* Added support for Meteor 3.0-rc.0 update
 * Added types and re-written into Typescript
-* Added GitHub sponsor
+* Added GitHub sponsors
 
 ## v0.4.1 - 12.3.2021
 * Fix potential bugs with `toUnit` and `unitToMilliseconds` input
