@@ -11,7 +11,7 @@ Package.describe({
 })
 
 Package.onUse(function(api) {
-  api.versionsFrom(['1.12.1', '2.3.1', '2.8.1', '3.0-rc.0']);
+  api.versionsFrom(['1.12.1', '2.3.1', '2.8.1', '3.0-rc.4']);
   api.use(['ecmascript', 'typescript']);
   api.use('logging');
   api.use('zodern:types@1.0.13');
